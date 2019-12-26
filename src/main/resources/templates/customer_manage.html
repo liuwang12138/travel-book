@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <div th:replace="common/common_header"></div>
+    <title>customer_add</title>
+    <div th:replace="common/common_header" />
 </head>
 <body>
 <h1>欢迎使用旅游预订系统</h1>
@@ -17,10 +17,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">首页 <span class="sr-only">(current)</span></a>
+                <a class="nav-link" th:href="@{/index}">首页</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/customer/page}">客户管理</a>
+                <a class="nav-link" href="#">客户管理<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/customer/page}">航班管理</a>
@@ -41,5 +41,36 @@
         </form>
     </div>
 </nav>
+
+<form>
+    <div class="form-group">
+        <label for="customerName">客户姓名</label>
+        <input type="text" class="form-control" id="customerName">
+    </div>
+    <div class="tip"></div>
+    <button type="submit" class="btn btn-primary" id="submit_btn">提交</button>
+</form>
 </body>
+
+<script type="text/javascript">
+    $('#submit_btn').click(function () {
+        let customerName = $('#customerName').val();
+
+        if(customerName === ""){
+            console.log('empty...');
+            $(".tip").html("用户名和密码不能为空");
+            $(".tip").css("display","block");
+            return;
+        }else{
+            console.log('checking...');
+            var url = "/customer/insert";
+            var args = {customerName:customerName};
+            $.post(url,args,function(data){
+                console.log('11111')
+            });
+
+        }
+    })
+
+</script>
 </html>

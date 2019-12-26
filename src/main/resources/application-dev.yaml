@@ -3,7 +3,10 @@ server:
 
 spring:
   datasource:
-    url: http://jdbc:mysql://120.27.242.116:3306/eshop?characterEncoding=UTF-8
+    url: http://jdbc:mysql://120.27.242.116:3306/travel_book?characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
+
+system:
+  name: Godric
