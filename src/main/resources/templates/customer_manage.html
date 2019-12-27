@@ -45,7 +45,7 @@
 <form>
     <div class="form-group">
         <label for="customerName">客户姓名</label>
-        <input type="text" class="form-control" id="customerName">
+        <input type="text" class="form-control" id="customerName" placeholder="请输入客户姓名">
     </div>
     <div class="tip"></div>
     <button type="submit" class="btn btn-primary" id="submit_btn" th:currentPage="${customerInfo.getCurrent()}">提交</button>
@@ -80,6 +80,12 @@
         <li th:class="${customerInfo.hasPrevious()}?'page-item' : 'page-item disabled'">
             <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()-1}+'&pageSize=5'}"><<</a>
         </li>
+        <li th:if="${customerInfo.getCurrent()-4 > 0 && customerInfo.getCurrent() + 1 >customerInfo.getPages()}" class="page-item">
+            <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()-4}+'&pageSize=5'}" th:text="${customerInfo.getCurrent()-4}"></a>
+        </li>
+        <li th:if="${customerInfo.getCurrent()-3 > 0 && customerInfo.getCurrent() + 2 >customerInfo.getPages()}" class="page-item">
+            <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()-3}+'&pageSize=5'}" th:text="${customerInfo.getCurrent()-3}"></a>
+        </li>
         <li th:if="${customerInfo.getCurrent()-2 >0 }" class="page-item">
             <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()-2}+'&pageSize=5'}" th:text="${customerInfo.getCurrent()-2}"></a>
         </li>
@@ -94,6 +100,12 @@
         </li>
         <li th:if="${customerInfo.getCurrent()+2 <= customerInfo.getPages() }" class="page-item">
             <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()+2}+'&pageSize=5'}" th:text="${customerInfo.getCurrent()+2}"></a>
+        </li>
+        <li th:if="${customerInfo.getCurrent()-2 <= 0 && customerInfo.getCurrent() + 3 <=customerInfo.getPages()}" class="page-item">
+            <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()+3}+'&pageSize=5'}" th:text="${customerInfo.getCurrent()+3}"></a>
+        </li>
+        <li th:if="${customerInfo.getCurrent()-1 <= 0 && customerInfo.getCurrent() + 4 <=customerInfo.getPages()}" class="page-item">
+            <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()+4}+'&pageSize=5'}" th:text="${customerInfo.getCurrent()+4}"></a>
         </li>
         <li th:class="${customerInfo.hasNext()}?'page-item' : 'page-item disabled'">
             <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()+1}+'&pageSize=5'}" tabindex="-1" th:aria-disabled="${customerInfo.hasNext()}?false:true">>></a>

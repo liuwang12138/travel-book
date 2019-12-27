@@ -1,6 +1,7 @@
 package com.ustc.travelbook.controller;
 
 import com.ustc.travelbook.service.ICustomerService;
+import com.ustc.travelbook.service.IFlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -11,4 +12,8 @@ import org.springframework.stereotype.Controller;
 public class AbstractController {
     @Autowired
     ICustomerService customerService;
+
+    @Autowired
+    IFlightService flightService;
+
 }
