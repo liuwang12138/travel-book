@@ -18,4 +18,9 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("search")
+    public String search() {
+        return "search";
+    }
+
 }

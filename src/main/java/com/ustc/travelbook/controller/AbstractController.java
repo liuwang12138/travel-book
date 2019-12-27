@@ -1,9 +1,6 @@
 package com.ustc.travelbook.controller;
 
-import com.ustc.travelbook.service.ICarService;
-import com.ustc.travelbook.service.ICustomerService;
-import com.ustc.travelbook.service.IFlightService;
-import com.ustc.travelbook.service.IHotelService;
+import com.ustc.travelbook.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -23,6 +20,9 @@ public class AbstractController {
 
     @Autowired
     IHotelService hotelService;
+
+    @Autowired
+    IReservationService reservationService;
 
 
 }

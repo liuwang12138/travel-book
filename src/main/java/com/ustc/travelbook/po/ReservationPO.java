@@ -25,6 +25,9 @@ public class ReservationPO {
     @TableField(value = "reservation_type")
     private Integer reservationType;
 
+    @TableField(value = "target_id")
+    private Integer targetId;
+
     @TableField(value = "reservation_key")
     private String reservationKey;
 

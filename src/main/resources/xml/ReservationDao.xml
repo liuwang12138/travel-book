@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ustc.travelbook.dao.ReservationDao">
+
+
+    <select id="selectFlightReservationInfo" resultType="com.ustc.travelbook.dto.FlightReservationDTO">
+        select
+            r.`id` as reservationId,
+            c.`customer_name`,
+            f.`price`,
+            f.`seat_num` as totalNum,
+            f.`available_num`,
+            r.`reservation_key`,
+            f.`flight_num`,
+            f.`from_city`,
+            f.`arrive_city`
+        from `reservation` r
+        right join flight f on r.`target_id` = f.`id`
+        right join customer c on r.`customer_id` = c.`id`
+        where
+            r.`reservation_type` = ${@com.ustc.travelbook.enums.ReservationEnum@FLIGHT.getCode}
+        <if test="customerId != null and customerId > 0">
+            and r.`customer_id` = #{customerId}
+        </if>
+    </select>
+    <select id="selectCarReservationInfo" resultType="com.ustc.travelbook.dto.CarReservationDTO">
+        select
+            r.`id` as reservationId,
+            c.`customer_name`,
+            car.`price`,
+            car.`car_num` as totalNum,
+            car.`available_num`,
+            r.`reservation_key`,
+            car.`type` as carType,
+            car.`location`
+        from `reservation` r
+        right join `car` on r.`target_id` = `car`.`id`
+        right join `customer` c on r.`customer_id` = c.`id`
+        where
+        r.`reservation_type` = ${@com.ustc.travelbook.enums.ReservationEnum@CAR.getCode}
+        <if test="customerId != null and customerId > 0">
+            and r.`customer_id` = #{customerId}
+        </if>
+    </select>
+    <select id="selectHotelReservationInfo" resultType="com.ustc.travelbook.dto.HotelReservationDTO">
+        select
+            r.`id` as reservationId,
+            c.`customer_name`,
+            h.`price`,
+            h.`room_num` as totalNum,
+            h.`available_num`,
+            r.`reservation_key`,
+            h.`name`,
+            h.`location`
+        from `reservation` r
+        right join `hotel` h on r.`target_id` = h.`id`
+        right join `customer` c on r.`customer_id` = c.`id`
+        where
+        r.`reservation_type` = ${@com.ustc.travelbook.enums.ReservationEnum@HOTEL.getCode}
+        <if test="customerId != null and customerId > 0">
+            and r.`customer_id` = #{customerId}
+        </if>
+    </select>
+</mapper>
