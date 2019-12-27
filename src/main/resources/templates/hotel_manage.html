@@ -23,13 +23,13 @@
                 <a class="nav-link" th:href="@{'/customer/list/all?pageNum=1&pageSize=5'}">客户管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">航班管理<span class="sr-only">(current)</span></a>
+                <a class="nav-link" th:href="@{'/flight/list/all?pageNum=1&pageSize=5'}">航班管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/customer/page}">出租车管理</a>
+                <a class="nav-link" th:href="@{'/car/list/all?pageNum=1&pageSize=5'}">出租车管理</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/customer/page}">宾馆管理</a>
+                <a class="nav-link" href="#">宾馆管理<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">敬请期待...</a>
@@ -44,97 +44,92 @@
 
 <form>
     <div class="form-group">
-        <label for="flightNum">航班号</label>
-        <input type="text" class="form-control" id="flightNum" placeholder="请输入航班号，航班号重复不能添加">
+        <label for="name">宾馆名</label>
+        <input type="text" class="form-control" id="name" placeholder="请输入宾馆名">
+    </div>
+    <div class="form-group">
+        <label for="location">地址</label>
+        <input type="text" class="form-control" id="location" placeholder="请输入地址">
     </div>
     <div class="form-group">
         <label for="price">价格</label>
-        <input type="text" class="form-control" id="price" placeholder="请输入航班价格(限制为两位小数)">
+        <input type="text" class="form-control" id="price" placeholder="请输入价格">
     </div>
     <div class="form-group">
-        <label for="seatNum">座位数</label>
-        <input type="text" class="form-control" id="seatNum" placeholder="请输入座位数">
+        <label for="roomNum">房间总数</label>
+        <input type="text" class="form-control" id="roomNum" placeholder="请输入房间总数">
     </div>
     <div class="form-group">
-        <label for="availableNum">可用座位数</label>
-        <input type="text" class="form-control" id="availableNum" placeholder="请输入可用座位数">
+        <label for="availableNum">可用房间数</label>
+        <input type="text" class="form-control" id="availableNum" placeholder="请输入可用房间数">
     </div>
-    <div class="form-group">
-        <label for="fromCity">起始城市</label>
-        <input type="text" class="form-control" id="fromCity" placeholder="请输入起始城市">
-    </div>
-    <div class="form-group">
-        <label for="arriveCity">到达城市</label>
-        <input type="text" class="form-control" id="arriveCity" placeholder="请输入结束">
     </div>
     <div class="tip"></div>
     <button type="submit" class="btn btn-primary" id="submit_btn">提交</button>
 </form>
 <hr>
 
-<h3>航班列表</h3>
+<h3>宾馆列表</h3>
 <table class="table">
     <thead>
     <tr>
         <th scope="col">id</th>
-        <th scope="col">航班号</th>
+        <th scope="col">宾馆名</th>
+        <th scope="col">地址</th>
         <th scope="col">价格</th>
-        <th scope="col">座位数</th>
-        <th scope="col">可用座位数</th>
-        <th scope="col">起始城市</th>
-        <th scope="col">到达城市</th>
+        <th scope="col">房间总数</th>
+        <th scope="col">可用房间数</th>
         <th scope="col">操作</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="flight : ${flightInfo.records}">
-        <th scope="row" th:text="${flight.id}"></th>
-        <td th:text="${flight.flightNum}"></td>
-        <td th:text="${flight.price}"></td>
-        <td th:text="${flight.seatNum}"></td>
-        <td th:text="${flight.availableNum}"></td>
-        <td th:text="${flight.fromCity}"></td>
-        <td th:text="${flight.arriveCity}"></td>
+    <tr th:each="hotel : ${hotelInfo.records}">
+        <th scope="row" th:text="${hotel.id}"></th>
+        <td th:text="${hotel.name}"></td>
+        <td th:text="${hotel.location}"></td>
+        <td th:text="${hotel.price}"></td>
+        <td th:text="${hotel.roomNum}"></td>
+        <td th:text="${hotel.availableNum}"></td>
         <td>
-            <button type="button" class="btn btn-danger del_btn" th:flightId="${flight.id}">删除</button>
+            <button type="button" class="btn btn-danger del_btn" th:hotelId="${hotel.id}">删除</button>
         </td>
     </tr>
     </tbody>
 </table>
 <nav aria-label="...">
     <ul class="pagination">
-        <li th:class="${flightInfo.hasPrevious()}?'page-item' : 'page-item disabled'">
-            <a class="page-link" th:href="@{'/flight/list/all?pageNum='+${flightInfo.getCurrent()-1}+'&pageSize=5'}"><<</a>
+        <li th:class="${hotelInfo.hasPrevious()}?'page-item' : 'page-item disabled'">
+            <a class="page-link" th:href="@{'/hotel/list/all?pageNum='+${hotelInfo.getCurrent()-1}+'&pageSize=5'}"><<</a>
         </li>
-        <li th:if="${flightInfo.getCurrent()-4 > 0 && flightInfo.getCurrent() + 1 >flightInfo.getPages()}" class="page-item">
-            <a class="page-link" th:href="@{'/flight/list/all?pageNum='+${flightInfo.getCurrent()-4}+'&pageSize=5'}" th:text="${flightInfo.getCurrent()-4}"></a>
+        <li th:if="${hotelInfo.getCurrent()-4 > 0 && hotelInfo.getCurrent() + 1 >hotelInfo.getPages()}" class="page-item">
+            <a class="page-link" th:href="@{'/hotel/list/all?pageNum='+${hotelInfo.getCurrent()-4}+'&pageSize=5'}" th:text="${hotelInfo.getCurrent()-4}"></a>
         </li>
-        <li th:if="${flightInfo.getCurrent()-3 > 0 && flightInfo.getCurrent() + 2 >flightInfo.getPages()}" class="page-item">
-            <a class="page-link" th:href="@{'/flight/list/all?pageNum='+${flightInfo.getCurrent()-3}+'&pageSize=5'}" th:text="${flightInfo.getCurrent()-3}"></a>
+        <li th:if="${hotelInfo.getCurrent()-3 > 0 && hotelInfo.getCurrent() + 2 >hotelInfo.getPages()}" class="page-item">
+            <a class="page-link" th:href="@{'/hotel/list/all?pageNum='+${hotelInfo.getCurrent()-3}+'&pageSize=5'}" th:text="${hotelInfo.getCurrent()-3}"></a>
         </li>
-        <li th:if="${flightInfo.getCurrent()-2 >0 }" class="page-item">
-            <a class="page-link" th:href="@{'/flight/list/all?pageNum='+${flightInfo.getCurrent()-2}+'&pageSize=5'}" th:text="${flightInfo.getCurrent()-2}"></a>
+        <li th:if="${hotelInfo.getCurrent()-2 >0 }" class="page-item">
+            <a class="page-link" th:href="@{'/hotel/list/all?pageNum='+${hotelInfo.getCurrent()-2}+'&pageSize=5'}" th:text="${hotelInfo.getCurrent()-2}"></a>
         </li>
-        <li th:if="${flightInfo.hasPrevious()}" class="page-item">
-            <a class="page-link" th:href="@{'/flight/list/all?pageNum='+${flightInfo.getCurrent()-1}+'&pageSize=5'}" th:text="${flightInfo.getCurrent()-1}"></a>
+        <li th:if="${hotelInfo.hasPrevious()}" class="page-item">
+            <a class="page-link" th:href="@{'/hotel/list/all?pageNum='+${hotelInfo.getCurrent()-1}+'&pageSize=5'}" th:text="${hotelInfo.getCurrent()-1}"></a>
         </li>
         <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#" th:text="${flightInfo.getCurrent()}"><span class="sr-only">(current)</span></a>
+            <a class="page-link" href="#" th:text="${hotelInfo.getCurrent()}"><span class="sr-only">(current)</span></a>
         </li>
-        <li th:if="${flightInfo.hasNext()}" class="page-item">
-            <a class="page-link" th:href="@{'/flight/list/all?pageNum='+${flightInfo.getCurrent()+1}+'&pageSize=5'}" th:text="${flightInfo.getCurrent()+1}"></a>
+        <li th:if="${hotelInfo.hasNext()}" class="page-item">
+            <a class="page-link" th:href="@{'/hotel/list/all?pageNum='+${hotelInfo.getCurrent()+1}+'&pageSize=5'}" th:text="${hotelInfo.getCurrent()+1}"></a>
         </li>
-        <li th:if="${flightInfo.getCurrent()+2 <= flightInfo.getPages() }" class="page-item">
-            <a class="page-link" th:href="@{'/flight/list/all?pageNum='+${flightInfo.getCurrent()+2}+'&pageSize=5'}" th:text="${flightInfo.getCurrent()+2}"></a>
+        <li th:if="${hotelInfo.getCurrent()+2 <= hotelInfo.getPages() }" class="page-item">
+            <a class="page-link" th:href="@{'/hotel/list/all?pageNum='+${hotelInfo.getCurrent()+2}+'&pageSize=5'}" th:text="${hotelInfo.getCurrent()+2}"></a>
         </li>
-        <li th:if="${flightInfo.getCurrent()-2 <= 0 && flightInfo.getCurrent() + 3 <=flightInfo.getPages()}" class="page-item">
-            <a class="page-link" th:href="@{'/flight/list/all?pageNum='+${flightInfo.getCurrent()+3}+'&pageSize=5'}" th:text="${flightInfo.getCurrent()+3}"></a>
+        <li th:if="${hotelInfo.getCurrent()-2 <= 0 && hotelInfo.getCurrent() + 3 <=hotelInfo.getPages()}" class="page-item">
+            <a class="page-link" th:href="@{'/hotel/list/all?pageNum='+${hotelInfo.getCurrent()+3}+'&pageSize=5'}" th:text="${hotelInfo.getCurrent()+3}"></a>
         </li>
-        <li th:if="${flightInfo.getCurrent()-1 <= 0 && flightInfo.getCurrent() + 4 <=flightInfo.getPages()}" class="page-item">
-            <a class="page-link" th:href="@{'/flight/list/all?pageNum='+${flightInfo.getCurrent()+4}+'&pageSize=5'}" th:text="${flightInfo.getCurrent()+4}"></a>
+        <li th:if="${hotelInfo.getCurrent()-1 <= 0 && hotelInfo.getCurrent() + 4 <=hotelInfo.getPages()}" class="page-item">
+            <a class="page-link" th:href="@{'/hotel/list/all?pageNum='+${hotelInfo.getCurrent()+4}+'&pageSize=5'}" th:text="${hotelInfo.getCurrent()+4}"></a>
         </li>
-        <li th:class="${flightInfo.hasNext()}?'page-item' : 'page-item disabled'">
-            <a class="page-link" th:href="@{'/flight/list/all?pageNum='+${flightInfo.getCurrent()+1}+'&pageSize=5'}" tabindex="-1" th:aria-disabled="${flightInfo.hasNext()}?false:true">>></a>
+        <li th:class="${hotelInfo.hasNext()}?'page-item' : 'page-item disabled'">
+            <a class="page-link" th:href="@{'/hotel/list/all?pageNum='+${hotelInfo.getCurrent()+1}+'&pageSize=5'}" tabindex="-1" th:aria-disabled="${hotelInfo.hasNext()}?false:true">>></a>
         </li>
     </ul>
 </nav>
@@ -142,22 +137,20 @@
 
 <script type="text/javascript">
     $('#submit_btn').click(function () {
-        let flightNum = $('#flightNum').val();
+        let name = $('#name').val();
+        let location = $('#location').val();
         let price = $('#price').val();
-        let seatNum = $('#seatNum').val();
+        let roomNum = $('#roomNum').val();
         let availableNum = $('#availableNum').val();
-        let fromCity = $('#fromCity').val();
-        let arriveCity = $('#arriveCity').val();
 
         console.log('checking...');
-        let url = "/flight/insert";
+        let url = "/hotel/insert";
         let args = {
-            flightNum:flightNum,
+            name:name,
+            location:location,
             price:price,
-            seatNum:seatNum,
-            availableNum:availableNum,
-            fromCity:fromCity,
-            arriveCity:arriveCity
+            roomNum:roomNum,
+            availableNum:availableNum
         };
         $.post(url,args,function(data){
             if (data.code === 201) {
@@ -173,8 +166,8 @@
 
     $('.del_btn').click(function () {
         console.log('delete.............');
-        let id = $('.del_btn').attr("flightId");
-        let url = "/flight/delete";
+        let id = $('.del_btn').attr("hotelId");
+        let url = "/hotel/delete";
         let args = {id:id};
         $.post(url,args,function(data){
             console.log('delete result -> data = ' + data);
