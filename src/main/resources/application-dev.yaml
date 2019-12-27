@@ -3,10 +3,20 @@ server:
 
 spring:
   datasource:
-    url: http://jdbc:mysql://120.27.242.116:3306/travel_book?characterEncoding=UTF-8
+    url: jdbc:mysql://120.27.242.116:3306/travel_book?characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
+
+mybatis-plus:
+  mapper-locations: classpath:xml/*.xml
+  type-aliases-package: com.ustc.travelbook.po
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.ustc.travelbook.dao: trace
 
 system:
   name: Godric

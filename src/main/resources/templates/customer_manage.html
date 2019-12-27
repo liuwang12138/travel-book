@@ -48,28 +48,102 @@
         <input type="text" class="form-control" id="customerName">
     </div>
     <div class="tip"></div>
-    <button type="submit" class="btn btn-primary" id="submit_btn">提交</button>
+    <button type="submit" class="btn btn-primary" id="submit_btn" th:currentPage="${customerInfo.getCurrent()}">提交</button>
 </form>
+<hr>
+
+<h3>客户列表</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">用户id</th>
+        <th scope="col">用户姓名</th>
+        <th scope="col">创建时间</th>
+        <th scope="col">更新时间</th>
+        <th scope="col">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${customerInfo.records}">
+        <th scope="row" th:text="${customer.id}"></th>
+        <td th:text="${customer.customerName}"></td>
+        <td th:text="${customer.createTime}"></td>
+        <td th:text="${customer.updateTime}"></td>
+        <td>
+            <button type="button" class="btn btn-danger del_btn" th:customerId="${customer.id}" th:currentPage="${customerInfo.getCurrent()}">删除</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<nav aria-label="...">
+    <ul class="pagination">
+        <li th:class="${customerInfo.hasPrevious()}?'page-item' : 'page-item disabled'">
+            <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()-1}+'&pageSize=5'}"><<</a>
+        </li>
+        <li th:if="${customerInfo.getCurrent()-2 >0 }" class="page-item">
+            <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()-2}+'&pageSize=5'}" th:text="${customerInfo.getCurrent()-2}"></a>
+        </li>
+        <li th:if="${customerInfo.hasPrevious()}" class="page-item">
+            <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()-1}+'&pageSize=5'}" th:text="${customerInfo.getCurrent()-1}"></a>
+        </li>
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#" th:text="${customerInfo.getCurrent()}"><span class="sr-only">(current)</span></a>
+        </li>
+        <li th:if="${customerInfo.hasNext()}" class="page-item">
+            <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()+1}+'&pageSize=5'}" th:text="${customerInfo.getCurrent()+1}"></a>
+        </li>
+        <li th:if="${customerInfo.getCurrent()+2 <= customerInfo.getPages() }" class="page-item">
+            <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()+2}+'&pageSize=5'}" th:text="${customerInfo.getCurrent()+2}"></a>
+        </li>
+        <li th:class="${customerInfo.hasNext()}?'page-item' : 'page-item disabled'">
+            <a class="page-link" th:href="@{'/customer/list/all?pageNum='+${customerInfo.getCurrent()+1}+'&pageSize=5'}" tabindex="-1" th:aria-disabled="${customerInfo.hasNext()}?false:true">>></a>
+        </li>
+    </ul>
+</nav>
+
+
 </body>
 
 <script type="text/javascript">
     $('#submit_btn').click(function () {
         let customerName = $('#customerName').val();
-
         if(customerName === ""){
             console.log('empty...');
             $(".tip").html("用户名和密码不能为空");
             $(".tip").css("display","block");
             return;
-        }else{
-            console.log('checking...');
-            var url = "/customer/insert";
-            var args = {customerName:customerName};
-            $.post(url,args,function(data){
-                console.log('11111')
-            });
-
         }
+
+        console.log('checking...');
+        let url = "/customer/insert";
+        let args = {customerName:customerName};
+        $.post(url,args,function(data){
+            if (data.code === 201) {
+                alert("插入成功");
+                window.location.reload();
+            } else {
+                alert("插入失败：" + data.message);
+                window.location.reload();
+            }
+        });
+
+    });
+
+    $('.del_btn').click(function () {
+        console.log('delete.............');
+        let id = $('.del_btn').attr("customerId");
+        let url = "/customer/delete";
+        let args = {id:id};
+        $.post(url,args,function(data){
+            console.log('delete result -> data = ' + data);
+            if (data.code === 201) {
+                alert("删除成功");
+                window.location.reload();
+            } else {
+                alert("删除失败：" + data.message);
+                window.location.reload();
+            }
+        });
     })
 
 </script>

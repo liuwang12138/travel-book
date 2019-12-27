@@ -7,6 +7,5 @@ import com.ustc.travelbook.po.CarPO;
  * @author shanjizhong
  * @date 2019/12/26 11:32:19
  */
-
 public interface CarDao extends BaseMapper<CarPO> {
 }

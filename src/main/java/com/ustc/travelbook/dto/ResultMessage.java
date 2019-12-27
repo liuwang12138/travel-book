@@ -6,13 +6,27 @@ import java.io.Serializable;
  * @author liuwang
  * @date 2019/12/26 11:52
  */
-public class ResultMessage<T> implements Serializable {
+public class ResultMessage implements Serializable {
 
     private int code;
 
     private String message;
 
-    private T data;
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     private static final int SUCCESS_CODE = 201;
     private static final int FAIL_CODE = 205;
@@ -24,23 +38,12 @@ public class ResultMessage<T> implements Serializable {
         this.message = message;
     }
 
-    public ResultMessage(int code, String message, T data) {
-        this.code = code;
-        this.message = message;
-        this.data = data;
-    }
-
-
     public static ResultMessage success() {
         return new ResultMessage(SUCCESS_CODE, SUCCESS_MESSAGE);
     }
 
     public static ResultMessage success(String message) {
         return new ResultMessage(SUCCESS_CODE, message);
-    }
-
-    public static ResultMessage success(Object data) {
-        return new ResultMessage(SUCCESS_CODE, SUCCESS_MESSAGE, data);
     }
 
     public static ResultMessage failed() {

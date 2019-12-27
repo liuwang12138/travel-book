@@ -2,7 +2,6 @@ package com.ustc.travelbook.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ustc.travelbook.po.CustomerPO;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author shanjizhong
