@@ -3,24 +3,20 @@ package com.ustc.travelbook.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ustc.travelbook.dao.CustomerDao;
-import com.ustc.travelbook.dao.FlightDao;
-import com.ustc.travelbook.dao.ReservationDao;
-import com.ustc.travelbook.dto.CarReservationDTO;
-import com.ustc.travelbook.dto.FlightReservationDTO;
-import com.ustc.travelbook.dto.HotelReservationDTO;
-import com.ustc.travelbook.dto.ResultMessage;
+import com.ustc.travelbook.dao.*;
+import com.ustc.travelbook.dto.*;
 import com.ustc.travelbook.enums.ReservationEnum;
-import com.ustc.travelbook.po.CustomerPO;
-import com.ustc.travelbook.po.FlightPO;
-import com.ustc.travelbook.po.ReservationPO;
+import com.ustc.travelbook.po.*;
 import com.ustc.travelbook.service.IReservationService;
 import com.ustc.travelbook.utils.TravelBookUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -39,6 +35,12 @@ public class ReservationServiceImpl implements IReservationService {
 
     @Autowired
     FlightDao flightDao;
+
+    @Autowired
+    CarDao carDao;
+
+    @Autowired
+    HotelDao hotelDao;
 
 
     @Override
@@ -75,9 +77,6 @@ public class ReservationServiceImpl implements IReservationService {
     @Transactional
     public ResultMessage insertFlightReservation(Integer customerId, String flightNum) throws Exception {
 
-        QueryWrapper<CustomerPO> customerQw = new QueryWrapper<CustomerPO>().eq("id", customerId);
-        QueryWrapper<FlightPO> flightQw = new QueryWrapper<FlightPO>().eq("flightNum", flightNum);
-
         CustomerPO customerPo = customerDao.selectById(customerId);
         if (Objects.isNull(customerPo)) {
             return ResultMessage.failed("找不到对应id的用户");
@@ -100,7 +99,7 @@ public class ReservationServiceImpl implements IReservationService {
         reservationDao.insert(po);
         flightDao.subAvailableSeat(flightPo.getId());
 
-        return ResultMessage.success("请牢记您的预订密钥：" + key);
+        return ResultMessage.success("请牢记您的预订密钥，丢失不补：" + key);
     }
 
     @Override
@@ -114,5 +113,98 @@ public class ReservationServiceImpl implements IReservationService {
             return ResultMessage.success();
         }
         return ResultMessage.failed();
+    }
+
+    @Override
+    public ResultMessage insertCarReservation(Integer customerId, String carType) throws Exception {
+        CustomerPO customerPo = customerDao.selectById(customerId);
+        if (Objects.isNull(customerPo)) {
+            return ResultMessage.failed("找不到对应id的用户");
+        }
+        CarPO carPo = carDao.selectOne(new QueryWrapper<CarPO>().eq("type", carType));
+        if (Objects.isNull(carPo)) {
+            return ResultMessage.failed("找不到对应车型的出租车");
+        }
+        if (carPo.getAvailableNum() < 1) {
+            return ResultMessage.failed("预订车型已无闲车");
+        }
+
+        String key = TravelBookUtils.generateRandomKey();
+        String secretKey = TravelBookUtils.encryptWithMd5(key);
+        ReservationPO po = ReservationPO.builder()
+                .customerId(customerId)
+                .reservationType(ReservationEnum.CAR.getCode())
+                .targetId(carPo.getId())
+                .reservationKey(secretKey).build();
+        reservationDao.insert(po);
+        carDao.subAvailableCar(carPo.getId());
+
+        return ResultMessage.success("请牢记您的预订密钥，丢失不补：" + key);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultMessage cancelCarReservation(Integer reservationId) {
+        ReservationPO reservationPo = reservationDao.selectById(reservationId);
+
+        int count = reservationDao.deleteById(reservationId);
+        if (count > 0) {
+            carDao.addAvailableCar(reservationPo.getId());
+            return ResultMessage.success();
+        }
+        return ResultMessage.failed();
+    }
+
+    @Override
+    public ResultMessage insertHotelReservation(Integer customerId, String hotelName) throws Exception {
+        CustomerPO customerPo = customerDao.selectById(customerId);
+        if (Objects.isNull(customerPo)) {
+            return ResultMessage.failed("找不到对应id的用户");
+        }
+        HotelPO hotelPo = hotelDao.selectOne(new QueryWrapper<HotelPO>().eq("name", hotelName));
+        if (Objects.isNull(hotelPo)) {
+            return ResultMessage.failed("找不到宾馆");
+        }
+        if (hotelPo.getAvailableNum() < 1) {
+            return ResultMessage.failed("预订宾馆已无空房");
+        }
+
+        String key = TravelBookUtils.generateRandomKey();
+        String secretKey = TravelBookUtils.encryptWithMd5(key);
+        ReservationPO po = ReservationPO.builder()
+                .customerId(customerId)
+                .reservationType(ReservationEnum.HOTEL.getCode())
+                .targetId(hotelPo.getId())
+                .reservationKey(secretKey).build();
+        reservationDao.insert(po);
+        hotelDao.subAvailableRoom(hotelPo.getId());
+
+        return ResultMessage.success("请牢记您的预订密钥，丢失不补：" + key);
+    }
+
+    @Override
+    public ResultMessage cancelHotelReservation(Integer reservationId) {
+        ReservationPO reservationPo = reservationDao.selectById(reservationId);
+
+        int count = reservationDao.deleteById(reservationId);
+        if (count > 0) {
+            hotelDao.addAvailableRoom(reservationPo.getId());
+            return ResultMessage.success();
+        }
+        return ResultMessage.failed();
+    }
+
+    @Override
+    public List<TravelPathDTO> getTravelPathByCustomerId(Integer customerId) {
+        List<FlightReservationDTO> records = selectFlightReservationInfoByPage(0, 0, customerId).getRecords();
+
+        List<TravelPathDTO> path = new ArrayList<>();
+        records.forEach(dto -> {
+            TravelPathDTO pathDto = new TravelPathDTO();
+            BeanUtils.copyProperties(dto, pathDto);
+            path.add(pathDto);
+        });
+
+        return path;
     }
 }

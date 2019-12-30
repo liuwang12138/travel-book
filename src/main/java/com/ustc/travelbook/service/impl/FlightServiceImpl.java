@@ -1,7 +1,9 @@
 package com.ustc.travelbook.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ustc.travelbook.dao.FlightDao;
+import com.ustc.travelbook.dto.TravelPathDTO;
 import com.ustc.travelbook.po.CustomerPO;
 import com.ustc.travelbook.po.FlightPO;
 import com.ustc.travelbook.service.IFlightService;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author shanjizhong
@@ -45,4 +48,5 @@ public class FlightServiceImpl implements IFlightService {
     public Boolean deleteById(Integer id) {
         return flightDao.deleteById(id) > 0;
     }
+
 }

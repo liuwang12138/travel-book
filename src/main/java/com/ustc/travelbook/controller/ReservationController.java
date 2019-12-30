@@ -1,12 +1,13 @@
 package com.ustc.travelbook.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.ustc.travelbook.dto.FlightReservationDTO;
-import com.ustc.travelbook.dto.ResultMessage;
+import com.ustc.travelbook.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author shanjizhong
@@ -35,7 +36,10 @@ public class ReservationController extends AbstractController {
                                            @RequestParam(value = "customerId", required = false) Integer customerId,
                                            Model model) {
 
-        return "reservation/flight_reservation";
+        IPage<CarReservationDTO> carReservationInfo = reservationService.selectCarReservationInfoByPage(pageNum, pageSize, customerId);
+        model.addAttribute("carReservationInfo", carReservationInfo);
+
+        return "reservation/car_reservation";
     }
 
     @GetMapping("hotel/list")
@@ -44,7 +48,10 @@ public class ReservationController extends AbstractController {
                                              @RequestParam(value = "customerId", required = false) Integer customerId,
                                              Model model) {
 
-        return "reservation/flight_reservation";
+        IPage<HotelReservationDTO> hotelReservationInfo = reservationService.selectHotelReservationInfoByPage(pageNum, pageSize, customerId);
+        model.addAttribute("hotelReservationInfo", hotelReservationInfo);
+
+        return "reservation/hotel_reservation";
     }
 
     @ResponseBody
@@ -60,5 +67,39 @@ public class ReservationController extends AbstractController {
         return reservationService.cancelFlightReservation(reservationId);
     }
 
+    @ResponseBody
+    @PostMapping("car/insert")
+    public ResultMessage insertCarReservation(@RequestParam(value = "customerId") Integer customerId,
+                                              @RequestParam(value = "carType") String carType) throws Exception {
+        return reservationService.insertCarReservation(customerId, carType);
+    }
+
+    @ResponseBody
+    @PostMapping("car/cancel")
+    public ResultMessage cancelCarReservation(@RequestParam(value = "reservationId") Integer reservationId) {
+        return reservationService.cancelCarReservation(reservationId);
+    }
+
+    @ResponseBody
+    @PostMapping("hotel/insert")
+    public ResultMessage insertHotelReservation(@RequestParam(value = "customerId") Integer customerId,
+                                                @RequestParam(value = "hotelName") String hotelName) throws Exception {
+        return reservationService.insertHotelReservation(customerId, hotelName);
+    }
+
+    @ResponseBody
+    @PostMapping("hotel/cancel")
+    public ResultMessage cancelHotelReservation(@RequestParam(value = "reservationId") Integer reservationId) {
+        return reservationService.cancelHotelReservation(reservationId);
+    }
+
+    @GetMapping(value = "path")
+    public String getTravelPath(@RequestParam(value = "customerId") Integer customerId,
+                                Model model) {
+        List<TravelPathDTO> travelPath = reservationService.getTravelPathByCustomerId(customerId);
+        model.addAttribute("travelPath", travelPath);
+
+        return "travel_path";
+    }
 
 }

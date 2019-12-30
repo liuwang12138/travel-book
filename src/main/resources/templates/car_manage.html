@@ -36,9 +36,9 @@
                     预订信息
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" th:href="@{/reservation/flight/list}">航班预订</a>
-                    <a class="dropdown-item" th:href="@{/reservation/car/list}">出租车预订</a>
-                    <a class="dropdown-item" th:href="@{/reservation/hotel/list}">宾馆预订</a>
+                    <a class="dropdown-item" th:href="@{'/reservation/flight/list?pageNum=1&pageSize=5'}">航班预订</a>
+                    <a class="dropdown-item" th:href="@{'/reservation/car/list?pageNum=1&pageSize=5'}">出租车预订</a>
+                    <a class="dropdown-item" th:href="@{'/reservation/hotel/list?pageNum=1&pageSize=5'}">宾馆预订</a>
                 </div>
             </li>
             <li class="nav-item">

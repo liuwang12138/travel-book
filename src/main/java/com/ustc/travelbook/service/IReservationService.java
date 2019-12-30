@@ -1,10 +1,9 @@
 package com.ustc.travelbook.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.ustc.travelbook.dto.CarReservationDTO;
-import com.ustc.travelbook.dto.FlightReservationDTO;
-import com.ustc.travelbook.dto.HotelReservationDTO;
-import com.ustc.travelbook.dto.ResultMessage;
+import com.ustc.travelbook.dto.*;
+
+import java.util.List;
 
 /**
  * @author shanjizhong
@@ -21,4 +20,14 @@ public interface IReservationService {
     ResultMessage insertFlightReservation(Integer customerId, String flightNum) throws Exception;
 
     ResultMessage cancelFlightReservation(Integer reservationId);
+
+    ResultMessage insertCarReservation(Integer customerId, String carType) throws Exception;
+
+    ResultMessage cancelCarReservation(Integer reservationId);
+
+    ResultMessage insertHotelReservation(Integer customerId, String hotelName) throws Exception;
+
+    ResultMessage cancelHotelReservation(Integer reservationId);
+
+    List<TravelPathDTO> getTravelPathByCustomerId(Integer customerId);
 }
