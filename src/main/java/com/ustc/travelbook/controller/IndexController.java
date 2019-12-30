@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * @author liuwang
+ * @author shanjizhong
  * @date 2019/12/26 15:39
  */
 @Slf4j

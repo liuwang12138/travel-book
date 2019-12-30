@@ -12,7 +12,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 /**
- * @author liuwang
+ * @author shanjizhong
  * @date 2019/12/26 13:33
  */
 @Slf4j

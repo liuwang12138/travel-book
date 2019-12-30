@@ -36,7 +36,7 @@
                     预订信息
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" th:href="@{/reservation/flight/list}">航班预订</a>
+                    <a class="dropdown-item" href="#">航班预订</a>
                     <a class="dropdown-item" th:href="@{/reservation/car/list}">出租车预订</a>
                     <a class="dropdown-item" th:href="@{/reservation/hotel/list}">宾馆预订</a>
                 </div>
@@ -51,7 +51,6 @@
         </form>
     </div>
 </nav>
-
 <h3>航班预定信息</h3>
 <hr>
 <table class="table">
@@ -71,14 +70,17 @@
     </thead>
     <tbody>
     <tr th:each="flight : ${flightReservationInfo.records}">
-        <th scope="row" th:text="${flight.id}"></th>
-        <td th:text="${flight.type}"></td>
-        <td th:text="${flight.location}"></td>
-        <td th:text="${flight.price}"></td>
+        <th scope="row" th:text="${flight.reservationId}"></th>
         <td th:text="${flight.flightNum}"></td>
+        <td th:text="${flight.price}"></td>
+        <td th:text="${flight.totalNum}"></td>
         <td th:text="${flight.availableNum}"></td>
+        <td th:text="${flight.fromCity}"></td>
+        <td th:text="${flight.arriveCity}"></td>
+        <td th:text="${flight.reservationKey}"></td>
+        <td th:text="${flight.customerName}"></td>
         <td>
-            <button type="button" class="btn btn-danger del_btn" th:carId="${flight.id}">取消预订</button>
+            <button type="button" class="btn btn-danger del_btn" th:carId="${flight.reservationId}">取消预订</button>
         </td>
     </tr>
     </tbody>

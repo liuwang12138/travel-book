@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 /**
- * @author liuwang
+ * @author shanjizhong
  * @date 2019/12/26 13:33
  */
 public class AbstractController {

@@ -3,7 +3,7 @@ package com.ustc.travelbook.dto;
 import java.io.Serializable;
 
 /**
- * @author liuwang
+ * @author shanjizhong
  * @date 2019/12/26 11:52
  */
 public class ResultMessage implements Serializable {
