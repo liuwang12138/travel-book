@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ustc.travelbook.dto.CarReservationDTO;
 import com.ustc.travelbook.dto.FlightReservationDTO;
 import com.ustc.travelbook.dto.HotelReservationDTO;
+import com.ustc.travelbook.dto.ResultMessage;
 
 /**
  * @author shanjizhong
@@ -17,4 +18,7 @@ public interface IReservationService {
 
     IPage<CarReservationDTO> selectCarReservationInfoByPage(Integer pageNum, Integer pageSize, Integer customerId);
 
+    ResultMessage insertFlightReservation(Integer customerId, String flightNum) throws Exception;
+
+    ResultMessage cancelFlightReservation(Integer reservationId);
 }

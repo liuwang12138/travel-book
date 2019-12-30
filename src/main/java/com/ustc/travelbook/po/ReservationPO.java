@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
  * @date 2019/12/26 11:12
  */
 @Data
+@Builder
 @TableName(value = "reservation")
 public class ReservationPO {
 
@@ -37,4 +39,16 @@ public class ReservationPO {
     @TableField(value = "update_time")
     private LocalDateTime updateTime;
 
+    public ReservationPO() {
+    }
+
+    public ReservationPO(Integer id, Integer customerId, Integer reservationType, Integer targetId, String reservationKey, LocalDateTime createTime, LocalDateTime updateTime) {
+        this.id = id;
+        this.customerId = customerId;
+        this.reservationType = reservationType;
+        this.targetId = targetId;
+        this.reservationKey = reservationKey;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
 }

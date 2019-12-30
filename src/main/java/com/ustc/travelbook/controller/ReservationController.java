@@ -2,12 +2,11 @@ package com.ustc.travelbook.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.ustc.travelbook.dto.FlightReservationDTO;
+import com.ustc.travelbook.dto.ResultMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author shanjizhong
@@ -47,5 +46,19 @@ public class ReservationController extends AbstractController {
 
         return "reservation/flight_reservation";
     }
+
+    @ResponseBody
+    @PostMapping("flight/insert")
+    public ResultMessage insertFlightReservation(@RequestParam(value = "customerId") Integer customerId,
+                                                 @RequestParam(value = "flightNum") String flightNum) throws Exception {
+        return reservationService.insertFlightReservation(customerId, flightNum);
+    }
+
+    @ResponseBody
+    @PostMapping("flight/cancel")
+    public ResultMessage cancelFlightReservation(@RequestParam(value = "reservationId") Integer reservationId) {
+        return reservationService.cancelFlightReservation(reservationId);
+    }
+
 
 }

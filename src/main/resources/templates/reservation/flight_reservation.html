@@ -80,7 +80,7 @@
         <td th:text="${flight.reservationKey}"></td>
         <td th:text="${flight.customerName}"></td>
         <td>
-            <button type="button" class="btn btn-danger del_btn" th:carId="${flight.reservationId}">取消预订</button>
+            <button type="button" class="btn btn-danger del_btn" th:reservationId="${flight.reservationId}">取消预订</button>
         </td>
     </tr>
     </tbody>
@@ -88,39 +88,99 @@
 <nav aria-label="...">
     <ul class="pagination">
         <li th:class="${flightReservationInfo.hasPrevious()}?'page-item' : 'page-item disabled'">
-            <a class="page-link" th:href="@{'/car/list/all?pageNum='+${flightReservationInfo.getCurrent()-1}+'&pageSize=5'}"><<</a>
+            <a class="page-link" th:href="@{'/reservation/flight/list?pageNum='+${flightReservationInfo.getCurrent()-1}+'&pageSize=5'}"><<</a>
         </li>
         <li th:if="${flightReservationInfo.getCurrent()-4 > 0 && flightReservationInfo.getCurrent() + 1 >flightReservationInfo.getPages()}" class="page-item">
-            <a class="page-link" th:href="@{'/car/list/all?pageNum='+${flightReservationInfo.getCurrent()-4}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()-4}"></a>
+            <a class="page-link" th:href="@{'/reservation/flight/list?pageNum='+${flightReservationInfo.getCurrent()-4}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()-4}"></a>
         </li>
         <li th:if="${flightReservationInfo.getCurrent()-3 > 0 && flightReservationInfo.getCurrent() + 2 >flightReservationInfo.getPages()}" class="page-item">
-            <a class="page-link" th:href="@{'/car/list/all?pageNum='+${flightReservationInfo.getCurrent()-3}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()-3}"></a>
+            <a class="page-link" th:href="@{'/reservation/flight/list?pageNum='+${flightReservationInfo.getCurrent()-3}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()-3}"></a>
         </li>
         <li th:if="${flightReservationInfo.getCurrent()-2 >0 }" class="page-item">
-            <a class="page-link" th:href="@{'/car/list/all?pageNum='+${flightReservationInfo.getCurrent()-2}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()-2}"></a>
+            <a class="page-link" th:href="@{'/reservation/flight/list?pageNum='+${flightReservationInfo.getCurrent()-2}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()-2}"></a>
         </li>
         <li th:if="${flightReservationInfo.hasPrevious()}" class="page-item">
-            <a class="page-link" th:href="@{'/car/list/all?pageNum='+${flightReservationInfo.getCurrent()-1}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()-1}"></a>
+            <a class="page-link" th:href="@{'/reservation/flight/list?pageNum='+${flightReservationInfo.getCurrent()-1}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()-1}"></a>
         </li>
         <li class="page-item active" aria-current="page">
             <a class="page-link" href="#" th:text="${flightReservationInfo.getCurrent()}"><span class="sr-only">(current)</span></a>
         </li>
         <li th:if="${flightReservationInfo.hasNext()}" class="page-item">
-            <a class="page-link" th:href="@{'/car/list/all?pageNum='+${flightReservationInfo.getCurrent()+1}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()+1}"></a>
+            <a class="page-link" th:href="@{'/reservation/flight/list?pageNum='+${flightReservationInfo.getCurrent()+1}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()+1}"></a>
         </li>
         <li th:if="${flightReservationInfo.getCurrent()+2 <= flightReservationInfo.getPages() }" class="page-item">
-            <a class="page-link" th:href="@{'/car/list/all?pageNum='+${flightReservationInfo.getCurrent()+2}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()+2}"></a>
+            <a class="page-link" th:href="@{'/reservation/flight/list?pageNum='+${flightReservationInfo.getCurrent()+2}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()+2}"></a>
         </li>
         <li th:if="${flightReservationInfo.getCurrent()-2 <= 0 && flightReservationInfo.getCurrent() + 3 <=flightReservationInfo.getPages()}" class="page-item">
-            <a class="page-link" th:href="@{'/car/list/all?pageNum='+${flightReservationInfo.getCurrent()+3}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()+3}"></a>
+            <a class="page-link" th:href="@{'/reservation/flight/list?pageNum='+${flightReservationInfo.getCurrent()+3}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()+3}"></a>
         </li>
         <li th:if="${flightReservationInfo.getCurrent()-1 <= 0 && flightReservationInfo.getCurrent() + 4 <=flightReservationInfo.getPages()}" class="page-item">
-            <a class="page-link" th:href="@{'/car/list/all?pageNum='+${flightReservationInfo.getCurrent()+4}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()+4}"></a>
+            <a class="page-link" th:href="@{'/reservation/flight/list?pageNum='+${flightReservationInfo.getCurrent()+4}+'&pageSize=5'}" th:text="${flightReservationInfo.getCurrent()+4}"></a>
         </li>
         <li th:class="${flightReservationInfo.hasNext()}?'page-item' : 'page-item disabled'">
-            <a class="page-link" th:href="@{'/car/list/all?pageNum='+${flightReservationInfo.getCurrent()+1}+'&pageSize=5'}" tabindex="-1" th:aria-disabled="${flightReservationInfo.hasNext()}?false:true">>></a>
+            <a class="page-link" th:href="@{'/reservation/flight/list?pageNum='+${flightReservationInfo.getCurrent()+1}+'&pageSize=5'}" tabindex="-1" th:aria-disabled="${flightReservationInfo.hasNext()}?false:true">>></a>
         </li>
     </ul>
 </nav>
+
+<br>
+<br>
+<hr>
+<h1>添加航班预订信息</h1>
+<form>
+    <div class="form-group">
+        <label for="customerId">预定人id</label>
+        <input type="text" class="form-control" id="customerId" placeholder="请输入预定人id">
+    </div>
+    <div class="form-group">
+        <label for="flightNum">航班号</label>
+        <input type="text" class="form-control" id="flightNum" placeholder="请输入航班号">
+    </div>
+    <div class="tip"></div>
+    <button type="submit" class="btn btn-primary" id="submit_btn">提交</button>
+</form>
 </body>
+
+<script type="text/javascript">
+    $('#submit_btn').click(function () {
+        let customerId = $('#customerId').val();
+        let flightNum = $('#flightNum').val();
+
+        let url = "/reservation/flight/insert";
+        let args = {
+            customerId: customerId,
+            flightNum: flightNum
+        };
+        $.post(url,args,function(data){
+            console.log("data = " + data);
+            if (data.code === 201) {
+                alert("插入成功" + data.message);
+                window.location.reload();
+            } else {
+                alert("插入失败：" + data.message);
+                window.location.reload();
+            }
+        });
+
+    });
+
+    $('.del_btn').click(function () {
+        console.log('delete.............');
+        let id = $('.del_btn').attr("reservationId");
+        let url = "/reservation/flight/cancel";
+        let args = {reservationId:id};
+        $.post(url,args,function(data){
+            console.log('delete result -> data = ' + data);
+            if (data.code === 201) {
+                alert("删除成功");
+                window.location.reload();
+            } else {
+                alert("删除失败：" + data.message);
+                window.location.reload();
+            }
+        });
+    })
+
+</script>
+
 </html>
