@@ -6,10 +6,8 @@
     <div th:replace="common/common_header" ></div>
 </head>
 <body>
-<h1>欢迎使用旅游预订系统</h1>
-<hr>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">导航栏</a>
+    <a class="navbar-brand" href="#">旅游预订系统</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -51,26 +49,26 @@
         </form>
     </div>
 </nav>
-
-<form>
+<div class="container">
+<form class="form-inline">
     <div class="form-group">
-        <label for="name">宾馆名</label>
+        <label for="name">宾馆名：</label>
         <input type="text" class="form-control" id="name" placeholder="请输入宾馆名">
     </div>
     <div class="form-group">
-        <label for="location">地址</label>
+        <label for="location">地址：</label>
         <input type="text" class="form-control" id="location" placeholder="请输入地址">
     </div>
     <div class="form-group">
-        <label for="price">价格</label>
+        <label for="price">价格：</label>
         <input type="text" class="form-control" id="price" placeholder="请输入价格">
     </div>
     <div class="form-group">
-        <label for="roomNum">房间总数</label>
+        <label for="roomNum">房间总数：</label>
         <input type="text" class="form-control" id="roomNum" placeholder="请输入房间总数">
     </div>
     <div class="form-group">
-        <label for="availableNum">可用房间数</label>
+        <label for="availableNum">可用房间数：</label>
         <input type="text" class="form-control" id="availableNum" placeholder="请输入可用房间数">
     </div>
     </div>
@@ -143,6 +141,7 @@
         </li>
     </ul>
 </nav>
+</div>
 </body>
 
 <script type="text/javascript">

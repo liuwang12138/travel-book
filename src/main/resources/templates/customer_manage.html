@@ -6,16 +6,14 @@
     <div th:replace="common/common_header" />
 </head>
 <body>
-<h1>欢迎使用旅游预订系统</h1>
-<hr>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">导航栏</a>
+    <a class="navbar-brand" href="#">旅游预订系统</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul class="nav navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/index}">首页</a>
             </li>
@@ -32,10 +30,10 @@
                 <a class="nav-link" th:href="@{'/hotel/list/all?pageNum=1&pageSize=5'}">宾馆管理</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     预订信息
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <div class="dropdown-menu">
                     <a class="dropdown-item" th:href="@{'/reservation/flight/list?pageNum=1&pageSize=5'}">航班预订</a>
                     <a class="dropdown-item" th:href="@{'/reservation/car/list?pageNum=1&pageSize=5'}">出租车预订</a>
                     <a class="dropdown-item" th:href="@{'/reservation/hotel/list?pageNum=1&pageSize=5'}">宾馆预订</a>
@@ -51,10 +49,10 @@
         </form>
     </div>
 </nav>
-
-<form>
+<div class="container">
+<form class="form-inline">
     <div class="form-group">
-        <label for="customerName">客户姓名</label>
+        <label for="customerName">客户姓名：</label>
         <input type="text" class="form-control" id="customerName" placeholder="请输入客户姓名">
     </div>
     <div class="tip"></div>
@@ -124,7 +122,7 @@
     </ul>
 </nav>
 
-
+</div>
 </body>
 
 <script type="text/javascript">

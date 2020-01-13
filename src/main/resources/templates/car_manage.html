@@ -6,10 +6,8 @@
     <div th:replace="common/common_header" ></div>
 </head>
 <body>
-<h1>欢迎使用旅游预订系统</h1>
-<hr>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">导航栏</a>
+    <a class="navbar-brand" href="#">旅游预订系统</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -51,32 +49,36 @@
         </form>
     </div>
 </nav>
-
-<form>
-    <div class="form-group">
-        <label for="type">车型</label>
+<div class="container">
+<form class="form-inline">
+<div class="row">
+    <div class="form-group col-sm-4">
+        <label for="type">车型：</label>
         <input type="text" class="form-control" id="type" placeholder="请输入车型">
     </div>
-    <div class="form-group">
-        <label for="location">地址</label>
+    <div class="form-group col-sm-4">
+        <label for="location">地址：</label>
         <input type="text" class="form-control" id="location" placeholder="请输入地址">
     </div>
-    <div class="form-group">
-        <label for="price">价格</label>
+    <div class="form-group col-sm-4">
+        <label for="price">价格：</label>
         <input type="text" class="form-control" id="price" placeholder="请输入价格">
     </div>
-    <div class="form-group">
-        <label for="carNum">出租车数量</label>
+</div>
+<div class="row">
+    <div class="form-group col-sm-4">
+        <label for="carNum">出租车数量：</label>
         <input type="text" class="form-control" id="carNum" placeholder="请输入出租车数量">
     </div>
-    <div class="form-group">
-        <label for="availableNum">剩余数量</label>
+    <div class="form-group col-sm-4">
+        <label for="availableNum">剩余数量：</label>
         <input type="text" class="form-control" id="availableNum" placeholder="请输入剩余数量">
     </div>
-    <div class="tip"></div>
-    <button type="submit" class="btn btn-primary" id="submit_btn">提交</button>
+    <div class="form-group col-sm-4">
+        <button type="submit" class="btn btn-primary" id="submit_btn">提交</button>
+    </div>
+</div>
 </form>
-<hr>
 
 <h3>出租车列表</h3>
 <table class="table">
@@ -142,6 +144,7 @@
         </li>
     </ul>
 </nav>
+</div>
 </body>
 
 <script type="text/javascript">

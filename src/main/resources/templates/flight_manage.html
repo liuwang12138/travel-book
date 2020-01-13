@@ -6,10 +6,8 @@
     <div th:replace="common/common_header" ></div>
 </head>
 <body>
-<h1>欢迎使用旅游预订系统</h1>
-<hr>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">导航栏</a>
+    <a class="navbar-brand" href="#">旅游预订系统</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -51,30 +49,30 @@
         </form>
     </div>
 </nav>
-
-<form>
+<div class="container">
+<form class="form-inline">
     <div class="form-group">
-        <label for="flightNum">航班号</label>
+        <label for="flightNum">航班号：</label>
         <input type="text" class="form-control" id="flightNum" placeholder="请输入航班号，航班号重复不能添加">
     </div>
     <div class="form-group">
-        <label for="price">价格</label>
+        <label for="price">价格：</label>
         <input type="text" class="form-control" id="price" placeholder="请输入航班价格(限制为两位小数)">
     </div>
     <div class="form-group">
-        <label for="seatNum">座位数</label>
+        <label for="seatNum">座位数：</label>
         <input type="text" class="form-control" id="seatNum" placeholder="请输入座位数">
     </div>
     <div class="form-group">
-        <label for="availableNum">可用座位数</label>
+        <label for="availableNum">可用座位数：</label>
         <input type="text" class="form-control" id="availableNum" placeholder="请输入可用座位数">
     </div>
     <div class="form-group">
-        <label for="fromCity">起始城市</label>
+        <label for="fromCity">起始城市：</label>
         <input type="text" class="form-control" id="fromCity" placeholder="请输入起始城市">
     </div>
     <div class="form-group">
-        <label for="arriveCity">到达城市</label>
+        <label for="arriveCity">到达城市：</label>
         <input type="text" class="form-control" id="arriveCity" placeholder="请输入结束">
     </div>
     <div class="tip"></div>
@@ -148,6 +146,7 @@
         </li>
     </ul>
 </nav>
+</div>
 </body>
 
 <script type="text/javascript">
